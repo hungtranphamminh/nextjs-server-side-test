@@ -10,17 +10,17 @@ importers:
     dependencies:
       next:
         specifier: 15.5.4
-        version: 15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.5.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react:
-        specifier: 19.1.0
-        version: 19.1.0
+        specifier: 19.0.0
+        version: 19.0.0
       react-dom:
-        specifier: 19.1.0
-        version: 19.1.0(react@19.1.0)
+        specifier: 19.0.0
+        version: 19.0.0(react@19.0.0)
     devDependencies:
-      '@cryptoguard/manifest-nextjs':
-        specifier: file:../../../contracts-action-server/packages/manifest-generator/nextjs
-        version: file:../../../contracts-action-server/packages/manifest-generator/nextjs(next@15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
+      '@cmdoss/cryptoguard-manifest-nextjs':
+        specifier: ^0.1.0
+        version: 0.1.0(next@15.5.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.14
@@ -46,11 +46,12 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@cryptoguard/manifest-core@file:../../../contracts-action-server/packages/manifest-generator/core':
-    resolution: {directory: ../../../contracts-action-server/packages/manifest-generator/core, type: directory}
+  '@cmdoss/cryptoguard-manifest-core@0.1.0':
+    resolution: {integrity: sha512-94+vnkT2qqaI47PECD+SKjmh6TCR5sI1tD4yTwT5F5oEOj2GQiu6CkLd38KpoHiS8fshCothJK3YWjfuvoQbCA==}
+    engines: {node: '>=18.0.0'}
 
-  '@cryptoguard/manifest-nextjs@file:../../../contracts-action-server/packages/manifest-generator/nextjs':
-    resolution: {directory: ../../../contracts-action-server/packages/manifest-generator/nextjs, type: directory}
+  '@cmdoss/cryptoguard-manifest-nextjs@0.1.0':
+    resolution: {integrity: sha512-/pofCgeppWKCBdGyYUqNv53st+s4hDs/jKwMEo29yQdH1HG3i+20a4z4PK6D3yHPldAsm8tlOVOcQ4bZYSBARg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       next: '>=15.0.0'
@@ -497,17 +498,17 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  react-dom@19.1.0:
-    resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
+  react-dom@19.0.0:
+    resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==}
     peerDependencies:
-      react: ^19.1.0
+      react: ^19.0.0
 
-  react@19.1.0:
-    resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
+  react@19.0.0:
+    resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==}
     engines: {node: '>=0.10.0'}
 
-  scheduler@0.26.0:
-    resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
+  scheduler@0.25.0:
+    resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==}
 
   semver@7.7.3:
     resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
@@ -565,12 +566,12 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@cryptoguard/manifest-core@file:../../../contracts-action-server/packages/manifest-generator/core': {}
+  '@cmdoss/cryptoguard-manifest-core@0.1.0': {}
 
-  '@cryptoguard/manifest-nextjs@file:../../../contracts-action-server/packages/manifest-generator/nextjs(next@15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))':
+  '@cmdoss/cryptoguard-manifest-nextjs@0.1.0(next@15.5.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
-      '@cryptoguard/manifest-core': file:../../../contracts-action-server/packages/manifest-generator/core
-      next: 15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@cmdoss/cryptoguard-manifest-core': 0.1.0
+      next: 15.5.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   '@emnapi/runtime@1.5.0':
     dependencies:
@@ -879,15 +880,15 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  next@15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  next@15.5.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@next/env': 15.5.4
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001750
       postcss: 8.4.31
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-      styled-jsx: 5.1.6(react@19.1.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      styled-jsx: 5.1.6(react@19.0.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.5.4
       '@next/swc-darwin-x64': 15.5.4
@@ -916,14 +917,14 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  react-dom@19.1.0(react@19.1.0):
+  react-dom@19.0.0(react@19.0.0):
     dependencies:
-      react: 19.1.0
-      scheduler: 0.26.0
+      react: 19.0.0
+      scheduler: 0.25.0
 
-  react@19.1.0: {}
+  react@19.0.0: {}
 
-  scheduler@0.26.0: {}
+  scheduler@0.25.0: {}
 
   semver@7.7.3:
     optional: true
@@ -960,10 +961,10 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
-  styled-jsx@5.1.6(react@19.1.0):
+  styled-jsx@5.1.6(react@19.0.0):
     dependencies:
       client-only: 0.0.1
-      react: 19.1.0
+      react: 19.0.0
 
   tailwindcss@4.1.14: {}
 

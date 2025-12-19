@@ -1,0 +1,64 @@
+name: CryptoGuard Deploy with Manifest
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Allow manual trigger for testing
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for GitHub OIDC token
+      contents: read
+      actions: read
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # Install pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: pnpm install
+
+      # Build your application (generates manifest.json automatically)
+      - name: Build
+        run: pnpm build
+
+      # Copy manifest to build directory for CryptoGuard Action
+      - name: Prepare Manifest
+        run: cp manifest.json .next/manifest.json
+
+      # Deploy to Vercel (optional - only if you want automatic deployment)
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     working-directory: ./
+
+      # CryptoGuard V0.4.1 Deploy with Manifest Support
+      - name: CryptoGuard Deploy
+        uses: CommandOSSLabs/cryptoguard-action@v0.4.1
+        with:
+          domain: ${{ secrets.DOMAIN }}
+          debug: true
+          build-dir: ./.next
+          network: testnet
+          registry-id: "0x7d7d100cce0cbbd01625b7f250c14cf25080fdcc412c651054ce44fe13f79bea"
+          package-id: "0xddba6e2954145327888ca39d4875b858622023175869d63b06e2d2ff7cc49310"
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

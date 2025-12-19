@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "framework": "nextjs",
+  "frameworkVersion": "15.5.4",
+  "sources": [
+    {
+      "dir": ".next/static",
+      "serveAt": "/_next/static"
+    },
+    {
+      "dir": "public",
+      "serveAt": "/"
+    }
+  ]
+}

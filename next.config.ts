@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { withCryptoGuardManifest } from "@cryptoguard/manifest-nextjs";
+import { withCryptoGuardManifest } from "@cmdoss/cryptoguard-manifest-nextjs";
 
 /**
  * CryptoGuard Manifest Generation - Next.js Configuration
@@ -19,7 +19,10 @@ const nextConfig: NextConfig = {
   // Environment-driven configuration (supports runtime values)
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   distDir: process.env.CUSTOM_DIST_DIR || undefined,
-  output: process.env.NEXT_OUTPUT_MODE as "export" | undefined,
+
+  // SSR mode (default) - supports API routes and dynamic rendering
+  // For static export, set NEXT_OUTPUT_MODE=export (removes API routes support)
+  ...(process.env.NEXT_OUTPUT_MODE === "export" && { output: "export" }),
 
   // Other Next.js configuration
   reactStrictMode: true,
