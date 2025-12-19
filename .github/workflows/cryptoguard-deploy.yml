@@ -55,10 +55,7 @@ jobs:
         uses: CommandOSSLabs/cryptoguard-action@v0.4.1
         with:
           domain: ${{ secrets.DOMAIN }}
-          debug: true
           build-dir: ./.next
           network: testnet
-          registry-id: "0x7d7d100cce0cbbd01625b7f250c14cf25080fdcc412c651054ce44fe13f79bea"
-          package-id: "0xddba6e2954145327888ca39d4875b858622023175869d63b06e2d2ff7cc49310"
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
