@@ -50,9 +50,9 @@ jobs:
       #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
       #     working-directory: ./
 
-      # CryptoGuard V0.5.5 Deploy - Fully Decentralized with Upload Relay
+      # CryptoGuard V0.5.6 Deploy - Correct Quilt Structure (attestation + manifest only)
       - name: CryptoGuard Deploy
-        uses: CommandOSSLabs/cryptoguard-action@v0.5.5
+        uses: CommandOSSLabs/cryptoguard-action@v0.5.6
         with:
           domain: ${{ secrets.DOMAIN }}
           build-dir: ./.next
