@@ -50,9 +50,9 @@ jobs:
       #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
       #     working-directory: ./
 
-      # CryptoGuard V0.4.3 Deploy with Manifest Support
+      # CryptoGuard V0.5.0 Deploy with Manifest Support
       - name: CryptoGuard Deploy
-        uses: CommandOSSLabs/cryptoguard-action@v0.4.3
+        uses: CommandOSSLabs/cryptoguard-action@v0.5.0
         with:
           domain: ${{ secrets.DOMAIN }}
           build-dir: ./.next
