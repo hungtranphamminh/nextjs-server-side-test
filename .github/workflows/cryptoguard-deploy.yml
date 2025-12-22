@@ -50,9 +50,9 @@ jobs:
       #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
       #     working-directory: ./
 
-      # CryptoGuard V0.5.3 Deploy - Fully Decentralized with SDK Payment
+      # CryptoGuard V0.5.4 Deploy - Fully Decentralized with SDK Payment
       - name: CryptoGuard Deploy
-        uses: CommandOSSLabs/cryptoguard-action@v0.5.3
+        uses: CommandOSSLabs/cryptoguard-action@v0.5.4
         with:
           domain: ${{ secrets.DOMAIN }}
           build-dir: ./.next
