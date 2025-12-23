@@ -13,6 +13,7 @@ jobs:
       contents: read
       actions: read
       attestations: write
+      checks: write # Required for GitHub check runs
     steps:
       - uses: actions/checkout@v4
 
@@ -50,9 +51,9 @@ jobs:
       #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
       #     working-directory: ./
 
-      # CryptoGuard V0.5.6 Deploy - Correct Quilt Structure (attestation + manifest only)
+      # CryptoGuard V0.5.7 Deploy - Cleanup dead code and unused imports
       - name: CryptoGuard Deploy
-        uses: CommandOSSLabs/cryptoguard-action@v0.5.6
+        uses: CommandOSSLabs/cryptoguard-action@v0.5.7
         with:
           domain: ${{ secrets.DOMAIN }}
           build-dir: ./.next
