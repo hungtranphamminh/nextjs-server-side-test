@@ -1,62 +1,43 @@
-name: CryptoGuard Deploy with Manifest
+# CryptoGuard SLSA Level 3 Deploy
+# Uses reusable workflow for real SLSA Level 3 provenance from isolated VM
+
+name: CryptoGuard SLSA Level 3 Deploy
 
 on:
   push:
     branches: [main]
-  workflow_dispatch: # Allow manual trigger for testing
+  workflow_dispatch:
 
 jobs:
+  # Single workflow call handles everything:
+  # 1. Build your app
+  # 2. Generate SLSA Level 3 provenance (isolated VM)
+  # 3. Upload to Walrus
+  # 4. Update Sui blockchain
   deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write # Required for GitHub OIDC token
-      contents: read
-      actions: read
-      attestations: write
-      checks: write # Required for GitHub check runs
-    steps:
-      - uses: actions/checkout@v4
+    uses: CommandOSSLabs/cryptoguard-action/.github/workflows/deploy-slsa3.yml@v1
+    with:
+      domain: ${{ secrets.DOMAIN }}
+      build-command: "pnpm build"
+      build-dir: ".next"
+      manifest-path: "./manifest.json"
+      package-manager: "pnpm"
+      node-version: "20"
+      network: "testnet"
+    secrets:
+      PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
-      # Install pnpm
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      # Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "pnpm"
-
-      # Install dependencies
-      - name: Install dependencies
-        run: pnpm install
-
-      # Build your application (generates manifest.json automatically)
-      - name: Build
-        run: pnpm build
-
-      # Copy manifest to build directory for CryptoGuard Action
-      - name: Prepare Manifest
-        run: cp manifest.json .next/manifest.json
-
-      # Deploy to Vercel (optional - only if you want automatic deployment)
-      # - name: Deploy to Vercel
-      #   uses: amondnet/vercel-action@v25
-      #   with:
-      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
-      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-      #     working-directory: ./
-
-      # CryptoGuard V0.5.7 Deploy - Cleanup dead code and unused imports
-      - name: CryptoGuard Deploy
-        uses: CommandOSSLabs/cryptoguard-action@v0.5.7
-        with:
-          domain: ${{ secrets.DOMAIN }}
-          build-dir: ./.next
-          network: testnet
-        env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  # Optional: Deploy to Vercel using the same build artifacts
+  # deploy-vercel:
+  #   needs: [deploy]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: ${{ needs.deploy.outputs.build-artifact-name }}
+  #         path: .next/
+  #     - uses: amondnet/vercel-action@v25
+  #       with:
+  #         vercel-token: ${{ secrets.VERCEL_TOKEN }}
+  #         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+  #         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
