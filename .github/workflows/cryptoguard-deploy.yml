@@ -17,7 +17,6 @@ jobs:
   deploy:
     uses: CommandOSSLabs/cryptoguard-action/.github/workflows/deploy-slsa3.yml@v1
     with:
-      domain: ${{ secrets.DOMAIN }}
       build-command: "pnpm build"
       build-dir: ".next"
       manifest-path: "./manifest.json"
@@ -25,6 +24,7 @@ jobs:
       node-version: "20"
       network: "testnet"
     secrets:
+      DOMAIN: ${{ secrets.DOMAIN }}
       PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
   # Optional: Deploy to Vercel using the same build artifacts
