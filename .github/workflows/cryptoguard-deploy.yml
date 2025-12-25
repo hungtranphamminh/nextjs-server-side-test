@@ -1,5 +1,5 @@
 # CryptoGuard SLSA Level 3 Deploy
-# Uses reusable workflow for real SLSA Level 3 provenance from isolated VM
+# Uses 3-job pattern for real SLSA Level 3 provenance
 
 name: CryptoGuard SLSA Level 3 Deploy
 
@@ -15,35 +15,35 @@ permissions:
   id-token: write
 
 jobs:
-  # Single workflow call handles everything:
-  # 1. Build your app
-  # 2. Generate SLSA Level 3 provenance (isolated VM)
-  # 3. Upload to Walrus
-  # 4. Update Sui blockchain
-  deploy:
-    uses: CommandOSSLabs/cryptoguard-action/.github/workflows/deploy-slsa3.yml@v1
+  # Job 1: Build (uses CryptoGuard build workflow)
+  build:
+    uses: CommandOSSLabs/cryptoguard-action/.github/workflows/build.yml@v1
     with:
       build-command: "pnpm build"
       build-dir: ".next"
       manifest-path: "./manifest.json"
       package-manager: "pnpm"
       node-version: "20"
+
+  # Job 2: Provenance (SLSA Level 3 - runs on isolated VM)
+  provenance:
+    needs: [build]
+    permissions:
+      actions: read
+      id-token: write
+      contents: write
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.1.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.hashes }}"
+      upload-assets: false
+
+  # Job 3: Deploy (uses CryptoGuard deploy workflow)
+  deploy:
+    needs: [build, provenance]
+    uses: CommandOSSLabs/cryptoguard-action/.github/workflows/deploy.yml@v1
+    with:
+      provenance-name: "${{ needs.provenance.outputs.provenance-name }}"
       network: "testnet"
     secrets:
       DOMAIN: ${{ secrets.DOMAIN }}
       PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-
-  # Optional: Deploy to Vercel using the same build artifacts
-  # deploy-vercel:
-  #   needs: [deploy]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/download-artifact@v4
-  #       with:
-  #         name: ${{ needs.deploy.outputs.build-artifact-name }}
-  #         path: .next/
-  #     - uses: amondnet/vercel-action@v25
-  #       with:
-  #         vercel-token: ${{ secrets.VERCEL_TOKEN }}
-  #         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-  #         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
